@@ -82,7 +82,8 @@ struct ContentView: View {
             .disabled(!bleLand.isServiceScanComplete || !bleLand.isDiscoverCharacteristicsButtonEnabled)
             .padding()
 
-            //MARK: Amplitude
+            
+            //MARK: AMPLITUDE
             Menu{
                 Button(action: {
                     ChoiceMadeAmp = "250"
@@ -116,7 +117,7 @@ struct ContentView: View {
                 )
             }.padding()
             
-            //MARK: Frequency
+            //MARK: FREQUENCY
             
             Menu{
                 Button(action: {
