@@ -17,6 +17,8 @@ struct ContentView: View {
     @StateObject private var bleLand = BlueToothNeighborhood()
     @State private var capsenseLabel: String = ""
     @State var isBluetoothReady = false
+    @State var ChoiceMadeAmp = "Amplitude (µA)"
+    @State var ChoiceMadeFreq = "Frequency (Hz)"
     @State private var ledSwitchIsOn: Bool = false
     @State private var capsenseNotifySwitchIsOn: Bool = false
     @State private var isConnectButtonEnabled = true
@@ -65,7 +67,6 @@ struct ContentView: View {
             //MARK: DISCOVER SERVICES
             Button(action: {
                 bleLand.discoverServices()
-                //isDiscoverCharacteristicsButtonEnabled = false
             }) {
                 Text("Discover Services")
             }
@@ -80,33 +81,80 @@ struct ContentView: View {
             }
             .disabled(!bleLand.isServiceScanComplete || !bleLand.isDiscoverCharacteristicsButtonEnabled)
             .padding()
+
+            //MARK: Amplitude
+            Menu{
+                Button(action: {
+                    ChoiceMadeAmp = "250"
+                }, label:{
+                    Text("250")
+                })
+                Button(action: {
+                    ChoiceMadeAmp = "200"
+                }, label:{
+                    Text("200")
+                })
+                Button(action: {
+                    ChoiceMadeAmp = "150"
+                }, label:{
+                    Text("150")
+                })
+                Button(action: {
+                    ChoiceMadeAmp = "100"
+                }, label:{
+                    Text("100")
+                })
+                Button(action: {
+                    ChoiceMadeAmp = "50"
+                }, label:{
+                    Text("50")
+                })
+            } label: {
+                Label (
+                    title: {Text("\(ChoiceMadeAmp)")},
+                    icon: {Image(systemName: "plus")}
+                )
+            }.padding()
             
-            //MARK: TOGGLE LED
+            //MARK: Frequency
             
-            Toggle("Toggle LED", isOn: $ledSwitchIsOn.animation())
-                .onChange(of: ledSwitchIsOn) { newValue in
-                    let value = newValue ? 1 : 0
-                    bleLand.writeLedCharacteristic(val: Int8(value))
-                }
-                .disabled(!bleLand.isCharacteristicScanComplete || !bleLand.isLedCharacteristicAvailable)
-                .padding(.horizontal, 100)
-                .padding()
-            
-            //MARK: TOGGLE NOTIFICATIONS
-            Toggle("Notify", isOn: $capsenseNotifySwitchIsOn)
-                .onChange(of: capsenseNotifySwitchIsOn) { newValue in
-                    bleLand.writeCapsenseNotify(state: newValue)
-                }
-                .disabled(!bleLand.isCharacteristicScanComplete)
-                .padding(.horizontal, 100)
-                .padding()
-            
-            //MARK: CAPSENSE VALUE
-            Text(capsenseLabel)
-                .onReceive(bleLand.$capsenseValue) { value in
-                    capsenseLabel = "Capsense value = \(value)"
-                }
-                .padding()
+            Menu{
+                Button(action: {
+                    ChoiceMadeFreq = "150"
+                }, label:{
+                    Text("150")
+                })
+                Button(action: {
+                    ChoiceMadeFreq = "140"
+                }, label:{
+                    Text("140")
+                })
+                Button(action: {
+                    ChoiceMadeFreq = "130"
+                }, label:{
+                    Text("130")
+                })
+                Button(action: {
+                    ChoiceMadeFreq = "120"
+                }, label:{
+                    Text("120")
+                })
+                Button(action: {
+                    ChoiceMadeFreq = "110"
+                }, label:{
+                    Text("110")
+                })
+                Button(action: {
+                    ChoiceMadeFreq = "100"
+                }, label:{
+                    Text("100")
+                })
+            } label: {
+                Label (
+                    title: {Text("\(ChoiceMadeFreq)")},
+                    icon: {Image(systemName: "plus")}
+                )
+            }.padding()
             
             //MARK: DISCONNECT
             Button(action: {
