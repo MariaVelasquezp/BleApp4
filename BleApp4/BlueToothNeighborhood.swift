@@ -89,6 +89,9 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         }
         
         centralManager.connect(capsenseLedBoard, options: nil)
+        isServiceScanComplete = false
+            isCharacteristicScanComplete = false
+            isDiscoverCharacteristicsButtonEnabled = false
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -132,7 +135,9 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         }
         
         capsenseLedBoard.discoverCharacteristics(nil, for: capsenseLedService)
+        isCharacteristicScanEnabled = true
     }
+
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard service.characteristics != nil else {

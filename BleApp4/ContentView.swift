@@ -27,6 +27,7 @@ struct ContentView: View {
     @State private var isDeviceFound = false
     @State private var isServiceScanComplete = false
     @State private var isCharacteristicScanComplete = false
+    @State private var isDiscoverCharacteristicsButtonEnabled = false
     
     var body: some View {
         VStack {
@@ -51,7 +52,7 @@ struct ContentView: View {
             }
             .disabled(bleLand.isDeviceFound || bleLand.isDisconnected)
             .padding()
-
+            
             
             //MARK: CONNECT
             Button(action: {
@@ -79,9 +80,9 @@ struct ContentView: View {
             }) {
                 Text("Discover Characteristics")
             }
-            .disabled(!bleLand.isServiceScanComplete || !bleLand.isDiscoverCharacteristicsButtonEnabled)
+            .disabled(!bleLand.isServiceScanComplete || !bleLand.isDiscoverCharacteristicsButtonEnabled || bleLand.isDisconnected || !bleLand.isConnectionComplete)
             .padding()
-
+            
             
             //MARK: AMPLITUDE
             Menu{
@@ -115,7 +116,9 @@ struct ContentView: View {
                     title: {Text("\(ChoiceMadeAmp)")},
                     icon: {Image(systemName: "plus")}
                 )
-            }.padding()
+            }
+            .disabled(!bleLand.isCharacteristicScanComplete || bleLand.isDisconnected || !bleLand.isConnectionComplete)
+            .padding()
             
             //MARK: FREQUENCY
             
@@ -155,11 +158,16 @@ struct ContentView: View {
                     title: {Text("\(ChoiceMadeFreq)")},
                     icon: {Image(systemName: "plus")}
                 )
-            }.padding()
+            }
+            .disabled(!bleLand.isCharacteristicScanComplete || bleLand.isDisconnected || !bleLand.isConnectionComplete)
+            .padding()
             
             //MARK: DISCONNECT
             Button(action: {
                 bleLand.disconnectDevice()
+                isDiscoverCharacteristicsButtonEnabled = false
+                ChoiceMadeAmp = "Amplitude (µA)"
+                ChoiceMadeFreq = "Frequency (Hz)"
             }) {
                 Text("Disconnect")
             }
@@ -168,8 +176,8 @@ struct ContentView: View {
         }
         
         .onAppear {
-                    bleLand.startUpCentralManager()
-                }
+            bleLand.startUpCentralManager()
+        }
         .onReceive(bleLand.$isBluetoothReady) { newValue in
             isBluetoothReady = newValue
         }
@@ -184,6 +192,13 @@ struct ContentView: View {
         }
         .onReceive(bleLand.$isCharacteristicScanComplete) { newValue in
             isCharacteristicScanComplete = newValue
+        }
+        .onReceive(bleLand.$isDisconnected) { newValue in
+            if newValue {
+                isDiscoverCharacteristicsButtonEnabled = false
+                isServiceScanComplete = false
+                isCharacteristicScanComplete = false
+            }
         }
     }
 }
