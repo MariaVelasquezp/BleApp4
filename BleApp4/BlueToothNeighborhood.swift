@@ -177,16 +177,28 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         isDisconnected = false
     }
     
-    func writeLedCharacteristic(val: Int8) {
+    func writeLedCharacteristicForFrequency(hexValue: UInt8) {
+        print("Received frequency: \(hexValue)")
         guard let capsenseLedBoard = capsenseLedBoard, let ledCharacteristic = ledCharacteristic else {
             print("Error: capsenseLedBoard or ledCharacteristic is nil")
             return
         }
         
-        var value = val
+        // Determine the value to write based on the frequency
+        var value: Int8 = 0
+        switch hexValue {
+        case 0x30: //"120", "140":
+                value = 1 // Turn LED on
+            //case "110", "130", "150":
+                //value = 0 // Turn LED off
+            default:
+                break
+        }
+        
         let ns = NSData(bytes: &value, length: MemoryLayout<Int8>.size)
         capsenseLedBoard.writeValue(ns as Data, for: ledCharacteristic, type: .withResponse)
     }
+
     
     
     func writeCapsenseNotify(state: Bool) {

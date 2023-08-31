@@ -102,6 +102,7 @@ struct ContentView: View {
                     Text("150")
                 })
                 Button(action: {
+                    
                     ChoiceMadeAmp = "100"
                 }, label:{
                     Text("100")
@@ -123,36 +124,43 @@ struct ContentView: View {
             //MARK: FREQUENCY
             
             Menu{
-                Button(action: {
+                /*Button(action: {
+                    bleLand.writeLedCharacteristicForFrequency("150")
                     ChoiceMadeFreq = "150"
                 }, label:{
                     Text("150")
                 })
                 Button(action: {
+                    bleLand.writeLedCharacteristicForFrequency("140")
                     ChoiceMadeFreq = "140"
                 }, label:{
                     Text("140")
                 })
                 Button(action: {
+                    bleLand.writeLedCharacteristicForFrequency("130")
                     ChoiceMadeFreq = "130"
                 }, label:{
                     Text("130")
                 })
                 Button(action: {
+                    bleLand.writeLedCharacteristicForFrequency("120")
                     ChoiceMadeFreq = "120"
                 }, label:{
                     Text("120")
                 })
                 Button(action: {
+                    bleLand.writeLedCharacteristicForFrequency("110")
                     ChoiceMadeFreq = "110"
                 }, label:{
                     Text("110")
-                })
+                })*/
                 Button(action: {
+                    bleLand.writeLedCharacteristicForFrequency(hexValue: 0x30) // Sending hex value 0x30
                     ChoiceMadeFreq = "100"
-                }, label:{
+                }) {
                     Text("100")
-                })
+                }
+
             } label: {
                 Label (
                     title: {Text("\(ChoiceMadeFreq)")},
