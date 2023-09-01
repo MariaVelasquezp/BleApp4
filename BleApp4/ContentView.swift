@@ -155,11 +155,14 @@ struct ContentView: View {
                     Text("110")
                 })*/
                 Button(action: {
-                    bleLand.writeLedCharacteristicForFrequency(hexValue: 0x30) // Sending hex value 0x30
+                    let value: Int8 = 0x30
+                    bleLand.writeLedCharacteristicForFrequency(val: Int8(value))
+                    print("Sending frequency: \(value)")
                     ChoiceMadeFreq = "100"
                 }) {
                     Text("100")
                 }
+
 
             } label: {
                 Label (

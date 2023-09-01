@@ -84,7 +84,7 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     
     func connectToDevice() {
         guard let capsenseLedBoard = capsenseLedBoard else {
-            print("No capsenseLedBoard found")
+            print("No AmpFreq found")
             return
         }
         
@@ -106,7 +106,7 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     
     func discoverServices() {
         guard let capsenseLedBoard = capsenseLedBoard else {
-            print("Error: capsenseLedBoard is nil")
+            print("Error: AmpFreq is nil")
             return
         }
         
@@ -130,7 +130,7 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     
     func discoverCharacteristics() {
         guard let capsenseLedBoard = capsenseLedBoard, let capsenseLedService = capsenseLedService else {
-            print("Error: capsenseLedBoard or capsenseLedService is nil")
+            print("Error: AmpFreq or FreqAmpService is nil")
             return
         }
         
@@ -177,16 +177,16 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         isDisconnected = false
     }
     
-    func writeLedCharacteristicForFrequency(hexValue: UInt8) {
-        print("Received frequency: \(hexValue)")
+    func writeLedCharacteristicForFrequency(val: Int8) {
+        print("Received frequency: \(val)")
         guard let capsenseLedBoard = capsenseLedBoard, let ledCharacteristic = ledCharacteristic else {
-            print("Error: capsenseLedBoard or ledCharacteristic is nil")
+            print("Error: AmpFreq or FrequencyCharacteristic is nil")
             return
         }
         
         // Determine the value to write based on the frequency
-        var value: Int8 = 0
-        switch hexValue {
+        var value = val
+        switch val {
         case 0x30: //"120", "140":
                 value = 1 // Turn LED on
             //case "110", "130", "150":
@@ -194,6 +194,7 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
             default:
                 break
         }
+        print("Value: \(val)")
         
         let ns = NSData(bytes: &value, length: MemoryLayout<Int8>.size)
         capsenseLedBoard.writeValue(ns as Data, for: ledCharacteristic, type: .withResponse)
