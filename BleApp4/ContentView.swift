@@ -155,12 +155,36 @@ struct ContentView: View {
                     Text("110")
                 })*/
                 Button(action: {
-                    let value: Int8 = 0x30
-                    bleLand.writeLedCharacteristicForFrequency(val: Int8(value))
+                    let value: UInt8 = 0x30
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
                     print("Sending frequency: \(value)")
                     ChoiceMadeFreq = "100"
                 }) {
-                    Text("100")
+                    Text("1Hz")
+                }
+                Button(action: {
+                    let value: UInt8 = 0x40
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    print("Sending frequency: \(value)")
+                    ChoiceMadeFreq = "100"
+                }) {
+                    Text("2Hz")
+                }
+                Button(action: {
+                    let value: UInt8 = 0x50
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    print("Sending frequency: \(value)")
+                    ChoiceMadeFreq = "100"
+                }) {
+                    Text("4Hz")
+                }
+                Button(action: {
+                    let value: UInt8 = 0x60
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    print("Sending frequency: \(value)")
+                    ChoiceMadeFreq = "100"
+                }) {
+                    Text("10Hz")
                 }
 
 
