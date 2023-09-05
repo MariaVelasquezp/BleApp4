@@ -15,12 +15,9 @@ struct RCNotifications {
 
 struct ContentView: View {
     @StateObject private var bleLand = BlueToothNeighborhood()
-    @State private var capsenseLabel: String = ""
     @State var isBluetoothReady = false
     @State var ChoiceMadeAmp = "Amplitude (µA)"
     @State var ChoiceMadeFreq = "Frequency (Hz)"
-    @State private var ledSwitchIsOn: Bool = false
-    @State private var capsenseNotifySwitchIsOn: Bool = false
     @State private var isConnectButtonEnabled = true
     @State private var isDiscoverServicesButtonEnabled = true
     @State private var isConnectionComplete = false
@@ -54,7 +51,7 @@ struct ContentView: View {
             .padding()
             
             
-            //MARK: CONNECT
+            //MARK: CONNECT TO DEVICE
             Button(action: {
                 if bleLand.isDeviceFound {
                     bleLand.connectToDevice()
@@ -88,35 +85,35 @@ struct ContentView: View {
             Menu{
                 Button(action: {
                     let value: UInt8 = 0x80
-                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    bleLand.writeLedCharacteristicForAmplitude(val: UInt8(value))
                     ChoiceMadeAmp = "250µA"
                 }, label:{
                     Text("250µA")
                 })
                 Button(action: {
                     let value: UInt8 = 0x90
-                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    bleLand.writeLedCharacteristicForAmplitude(val: UInt8(value))
                     ChoiceMadeAmp = "200µA"
                 }, label:{
                     Text("200µA")
                 })
                 Button(action: {
                     let value: UInt8 = 0x91
-                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    bleLand.writeLedCharacteristicForAmplitude(val: UInt8(value))
                     ChoiceMadeAmp = "150µA"
                 }, label:{
                     Text("150µA")
                 })
                 Button(action: {
                     let value: UInt8 = 0x92
-                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    bleLand.writeLedCharacteristicForAmplitude(val: UInt8(value))
                     ChoiceMadeAmp = "100µA"
                 }, label:{
                     Text("100µA")
                 })
                 Button(action: {
                     let value: UInt8 = 0x93
-                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    bleLand.writeLedCharacteristicForAmplitude(val: UInt8(value))
                     ChoiceMadeAmp = "50µA"
                 }, label:{
                     Text("50µA")

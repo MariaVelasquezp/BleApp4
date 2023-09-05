@@ -3,9 +3,9 @@ import CoreBluetooth
 import Combine
 
 private struct BLEParameters {
-    static let capsenseLedService = CBUUID(string: "00000000-0000-1000-8000-00805F9B34F0")
-    static let ledCharactersticUUID = CBUUID(string:"00000000-0000-1000-8000-00805F9B34F1")
-    static let capsenseCharactersticUUID = CBUUID(string:"00000000-0000-1000-8000-00805F9B34F2")
+    static let AmpFreqService = CBUUID(string: "00000000-0000-1000-8000-00805F9B34F0")
+    static let FrequencyCharactersticUUID = CBUUID(string:"00000000-0000-1000-8000-00805F9B34F1")
+    static let AmplitudeCharactersticUUID = CBUUID(string:"00000000-0000-1000-8000-00805F9B34F2")
 }
 
 class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate, ObservableObject {
@@ -19,7 +19,7 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     @Published var isDiscoverCharacteristicsButtonEnabled = false
     @Published var isDisconnected = false
     var isLedCharacteristicAvailable: Bool {
-        return ledCharacteristic != nil
+        return FrequencyCharacteristic != nil
     }
     @Published var isCharacteristicScanEnabled = false {
         didSet {
@@ -30,15 +30,15 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     }
      
     private var centralManager: CBCentralManager!
-    private var capsenseLedBoard: CBPeripheral?
-    private var capsenseLedService: CBService?
-    private var ledCharacteristic: CBCharacteristic?
-    private var capsenseCharacteristic: CBCharacteristic?
-    private var capsenseValueSubject = CurrentValueSubject<Int, Never>(0)
+    private var AmpFreqBoard: CBPeripheral?
+    private var AmpFreqService: CBService?
+    private var FrequencyCharacteristic: CBCharacteristic?
+    private var AmplitudeCharacteristic: CBCharacteristic?
+    //private var capsenseValueSubject = CurrentValueSubject<Int, Never>(0)
         
-        var capsenseValuePublisher: AnyPublisher<Int, Never> {
+        /*var capsenseValuePublisher: AnyPublisher<Int, Never> {
             capsenseValueSubject.eraseToAnyPublisher()
-        }
+        }*/
     
         var isConnectButtonEnabled: Bool {
             !isConnectionComplete
@@ -70,34 +70,34 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     
     func discoverDevice() {
         print("Starting scan")
-        centralManager.scanForPeripherals(withServices: [BLEParameters.capsenseLedService], options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
+        centralManager.scanForPeripherals(withServices: [BLEParameters.AmpFreqService], options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
     }
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        if capsenseLedBoard == nil {
-            print("Found a new Peripheral advertising capsense led service")
-            capsenseLedBoard = peripheral
+        if AmpFreqBoard == nil {
+            print("Found a new Peripheral advertising amplitude frequency service")
+            AmpFreqBoard = peripheral
             isDeviceFound = true
             centralManager.stopScan()
         }
     }
     
     func connectToDevice() {
-        guard let capsenseLedBoard = capsenseLedBoard else {
+        guard let AmpFreqBoard = AmpFreqBoard else {
             print("No AmpFreq found")
             return
         }
         
-        centralManager.connect(capsenseLedBoard, options: nil)
+        centralManager.connect(AmpFreqBoard, options: nil)
         isServiceScanComplete = false
             isCharacteristicScanComplete = false
             isDiscoverCharacteristicsButtonEnabled = false
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        if let capsenseLedBoard = capsenseLedBoard {
-            print("Connection complete \(capsenseLedBoard) \(peripheral)")
-            capsenseLedBoard.delegate = self
+        if let AmpFreqBoard = AmpFreqBoard {
+            print("Connection complete \(AmpFreqBoard) \(peripheral)")
+            AmpFreqBoard.delegate = self
             DispatchQueue.main.async {
                 self.isConnectionComplete = true
             }
@@ -105,12 +105,12 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     }
     
     func discoverServices() {
-        guard let capsenseLedBoard = capsenseLedBoard else {
+        guard let AmpFreqBoard = AmpFreqBoard else {
             print("Error: AmpFreq is nil")
             return
         }
         
-        capsenseLedBoard.discoverServices(nil)
+        AmpFreqBoard.discoverServices(nil)
     }
     
     
@@ -119,8 +119,8 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         if let services = peripheral.services {
             for service in services {
                 print("Found service \(service)")
-                if service.uuid == BLEParameters.capsenseLedService {
-                    capsenseLedService = service
+                if service.uuid == BLEParameters.AmpFreqService {
+                    AmpFreqService = service
                 }
             }
         }
@@ -129,12 +129,12 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     }
     
     func discoverCharacteristics() {
-        guard let capsenseLedBoard = capsenseLedBoard, let capsenseLedService = capsenseLedService else {
+        guard let AmpFreqBoard = AmpFreqBoard, let AmpFreqService = AmpFreqService else {
             print("Error: AmpFreq or FreqAmpService is nil")
             return
         }
         
-        capsenseLedBoard.discoverCharacteristics(nil, for: capsenseLedService)
+        AmpFreqBoard.discoverCharacteristics(nil, for: AmpFreqService)
         isCharacteristicScanEnabled = true
     }
 
@@ -151,10 +151,10 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
             print("Found characteristic: \(characteristic)")
             
             switch characteristic.uuid {
-            case BLEParameters.capsenseCharactersticUUID:
-                capsenseCharacteristic = characteristic
-            case BLEParameters.ledCharactersticUUID:
-                ledCharacteristic = characteristic
+            case BLEParameters.AmplitudeCharactersticUUID:
+                AmplitudeCharacteristic = characteristic
+            case BLEParameters.FrequencyCharactersticUUID:
+                FrequencyCharacteristic = characteristic
             default:
                 break
             }
@@ -163,8 +163,8 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     }
     
     func disconnectDevice() {
-        if let capsenseLedBoard = capsenseLedBoard {
-            centralManager.cancelPeripheralConnection(capsenseLedBoard)
+        if let AmpFreqBoard = AmpFreqBoard {
+            centralManager.cancelPeripheralConnection(AmpFreqBoard)
         }
         isDisconnected = true
         isDeviceFound = false
@@ -172,14 +172,14 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("Disconnected \(peripheral)")
-        capsenseLedBoard = nil
+        AmpFreqBoard = nil
         isConnectionComplete = false
         isDisconnected = false
     }
     
     func writeLedCharacteristicForFrequency(val: UInt8) {
         print("Received frequency: \(val)")
-        guard let capsenseLedBoard = capsenseLedBoard, let ledCharacteristic = ledCharacteristic else {
+        guard let AmpFreqBoard = AmpFreqBoard, let FrequencyCharacteristic = FrequencyCharacteristic else {
             print("Error: AmpFreq or FrequencyCharacteristic is nil")
             return
         }
@@ -187,22 +187,30 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         var value = val
         
         let ns = NSData(bytes: &value, length: MemoryLayout<UInt8>.size)
-        capsenseLedBoard.writeValue(ns as Data, for: ledCharacteristic, type: .withResponse)
+        AmpFreqBoard.writeValue(ns as Data, for: FrequencyCharacteristic, type: .withResponse)
 
         print("Value: \(value)")
 
     }
 
-    func writeCapsenseNotify(state: Bool) {
-        guard let capsenseCharacteristic = capsenseCharacteristic else {
-            print("Error: capsenseCharacteristic is nil")
+    func writeLedCharacteristicForAmplitude(val: UInt8) {
+        print("Received frequency: \(val)")
+        guard let AmpFreqBoard = AmpFreqBoard, let FrequencyCharacteristic = FrequencyCharacteristic else {
+            print("Error: AmpFreq or AmplitudeCharacteristic is nil")
             return
         }
-        capsenseNotifySwitchIsOn = state
-        capsenseLedBoard?.setNotifyValue(state, for: capsenseCharacteristic)
+        
+        var value = val
+        
+        let ns = NSData(bytes: &value, length: MemoryLayout<UInt8>.size)
+        AmpFreqBoard.writeValue(ns as Data, for: FrequencyCharacteristic, type: .withResponse)
+
+        print("Value: \(value)")
+
     }
+    
         func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-            if characteristic == capsenseCharacteristic {
+            if characteristic == AmplitudeCharacteristic {
                 var out: Int = 0
                 if let value = characteristic.value {
                     (value as NSData).getBytes(&out, length: MemoryLayout<Int>.size)
