@@ -60,7 +60,7 @@ struct ContentView: View {
                     bleLand.connectToDevice()
                 }
             }) {
-                Text("Connect")
+                Text("Connect to device")
             }
             .disabled(!bleLand.isDeviceFound)
             .padding()
@@ -87,30 +87,39 @@ struct ContentView: View {
             //MARK: AMPLITUDE
             Menu{
                 Button(action: {
-                    ChoiceMadeAmp = "250"
+                    let value: UInt8 = 0x80
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    ChoiceMadeAmp = "250µA"
                 }, label:{
-                    Text("250")
+                    Text("250µA")
                 })
                 Button(action: {
-                    ChoiceMadeAmp = "200"
+                    let value: UInt8 = 0x90
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    ChoiceMadeAmp = "200µA"
                 }, label:{
-                    Text("200")
+                    Text("200µA")
                 })
                 Button(action: {
-                    ChoiceMadeAmp = "150"
+                    let value: UInt8 = 0x91
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    ChoiceMadeAmp = "150µA"
                 }, label:{
-                    Text("150")
+                    Text("150µA")
                 })
                 Button(action: {
-                    
-                    ChoiceMadeAmp = "100"
+                    let value: UInt8 = 0x92
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    ChoiceMadeAmp = "100µA"
                 }, label:{
-                    Text("100")
+                    Text("100µA")
                 })
                 Button(action: {
-                    ChoiceMadeAmp = "50"
+                    let value: UInt8 = 0x93
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    ChoiceMadeAmp = "50µA"
                 }, label:{
-                    Text("50")
+                    Text("50µA")
                 })
             } label: {
                 Label (
@@ -124,43 +133,37 @@ struct ContentView: View {
             //MARK: FREQUENCY
             
             Menu{
-                /*Button(action: {
-                    bleLand.writeLedCharacteristicForFrequency("150")
-                    ChoiceMadeFreq = "150"
-                }, label:{
-                    Text("150")
-                })
                 Button(action: {
-                    bleLand.writeLedCharacteristicForFrequency("140")
-                    ChoiceMadeFreq = "140"
-                }, label:{
-                    Text("140")
-                })
-                Button(action: {
-                    bleLand.writeLedCharacteristicForFrequency("130")
-                    ChoiceMadeFreq = "130"
-                }, label:{
-                    Text("130")
-                })
-                Button(action: {
-                    bleLand.writeLedCharacteristicForFrequency("120")
-                    ChoiceMadeFreq = "120"
-                }, label:{
-                    Text("120")
-                })
-                Button(action: {
-                    bleLand.writeLedCharacteristicForFrequency("110")
-                    ChoiceMadeFreq = "110"
-                }, label:{
-                    Text("110")
-                })*/
-                Button(action: {
-                    let value: Int8 = 0x30
-                    bleLand.writeLedCharacteristicForFrequency(val: Int8(value))
+                    let value: UInt8 = 0x30
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
                     print("Sending frequency: \(value)")
-                    ChoiceMadeFreq = "100"
+                    ChoiceMadeFreq = "1Hz"
                 }) {
-                    Text("100")
+                    Text("1Hz")
+                }
+                Button(action: {
+                    let value: UInt8 = 0x40
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    print("Sending frequency: \(value)")
+                    ChoiceMadeFreq = "2Hz"
+                }) {
+                    Text("2Hz")
+                }
+                Button(action: {
+                    let value: UInt8 = 0x50
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    print("Sending frequency: \(value)")
+                    ChoiceMadeFreq = "4Hz"
+                }) {
+                    Text("4Hz")
+                }
+                Button(action: {
+                    let value: UInt8 = 0x60
+                    bleLand.writeLedCharacteristicForFrequency(val: UInt8(value))
+                    print("Sending frequency: \(value)")
+                    ChoiceMadeFreq = "10Hz"
+                }) {
+                    Text("10Hz")
                 }
 
 
