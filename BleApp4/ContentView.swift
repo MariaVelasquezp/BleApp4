@@ -223,15 +223,15 @@ struct ContentView: View {
                     }
                     //.tag(0)
 
-                    PeripheralListView(bleLand: bleLand)
+                    PeripheralListView(bleLand: bleLand, selectedTab: $selectedTab)
                         .tabItem {
                             Label("Peripherals", systemImage: "list.bullet")
                         }
                         //.tag(1)
                 }
 }
-        struct ContentView_Previews: PreviewProvider {
+        /*struct ContentView_Previews: PreviewProvider {
             static var previews: some View {
                 ContentView()
     }
-}
+}*/
