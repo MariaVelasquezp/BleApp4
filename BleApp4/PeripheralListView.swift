@@ -6,8 +6,8 @@ struct PeripheralListView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                // Your list content here
+            List(bleLand.discoveredPeripherals, id: \.self) { peripheral in
+                Text(peripheral.name ?? "Unnamed Peripheral")
             }
             .navigationBarTitle("Available Peripherals")
         }

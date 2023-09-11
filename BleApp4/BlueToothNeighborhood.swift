@@ -218,6 +218,4 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         print("Value: \(value)")
 
     }
-    
-        
 }
