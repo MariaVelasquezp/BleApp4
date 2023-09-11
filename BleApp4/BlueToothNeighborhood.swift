@@ -14,10 +14,13 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
     @Published var isConnectionComplete = false
     @Published var isServiceScanComplete = false
     @Published var isCharacteristicScanComplete = false
-    @Published var capsenseValue = 0
     @Published var capsenseNotifySwitchIsOn = false
     @Published var isDiscoverCharacteristicsButtonEnabled = false
     @Published var isDisconnected = false
+    @Published var selectedTab: Int = 1
+    @Published var discoveredPeripherals: [CBPeripheral] = []
+    
+    var selectedPeripheral: CBPeripheral?
     var isLedCharacteristicAvailable: Bool {
         return FrequencyCharacteristic != nil
     }
@@ -77,32 +80,35 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         if AmpFreqBoard == nil {
             print("Found a new Peripheral advertising amplitude frequency service")
             AmpFreqBoard = peripheral
+            //centralManager.connect(peripheral, options: nil)
+            discoveredPeripherals.append(peripheral)
             isDeviceFound = true
             centralManager.stopScan()
         }
     }
     
     func connectToDevice() {
-        guard let AmpFreqBoard = AmpFreqBoard else {
-            print("No AmpFreq found")
-            return
+            guard let AmpFreqBoard = AmpFreqBoard else {
+                print("No AmpFreq found")
+                return
+            }
+            
+            centralManager.connect(AmpFreqBoard, options: nil)
+            isServiceScanComplete = false
+                isCharacteristicScanComplete = false
+                isDiscoverCharacteristicsButtonEnabled = false
         }
         
-        centralManager.connect(AmpFreqBoard, options: nil)
-        isServiceScanComplete = false
-            isCharacteristicScanComplete = false
-            isDiscoverCharacteristicsButtonEnabled = false
-    }
-    
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        if let AmpFreqBoard = AmpFreqBoard {
-            print("Connection complete \(AmpFreqBoard) \(peripheral)")
-            AmpFreqBoard.delegate = self
-            DispatchQueue.main.async {
-                self.isConnectionComplete = true
+        func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+            if let AmpFreqBoard = AmpFreqBoard {
+                print("Connection complete \(AmpFreqBoard) \(peripheral)")
+                AmpFreqBoard.delegate = self
+                DispatchQueue.main.async {
+                    self.isConnectionComplete = true
+                }
             }
         }
-    }
+
     
     func discoverServices() {
         guard let AmpFreqBoard = AmpFreqBoard else {
@@ -177,6 +183,10 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
         isDisconnected = false
     }
     
+    func stopScanning() {
+            centralManager.stopScan()
+        }
+    
     func writeLedCharacteristicForFrequency(val: UInt8) {
         print("Received frequency: \(val)")
         guard let AmpFreqBoard = AmpFreqBoard, let FrequencyCharacteristic = FrequencyCharacteristic else {
@@ -209,15 +219,5 @@ class BlueToothNeighborhood: NSObject, CBCentralManagerDelegate, CBPeripheralDel
 
     }
     
-        func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-            if characteristic == AmplitudeCharacteristic {
-                var out: Int = 0
-                if let value = characteristic.value {
-                    (value as NSData).getBytes(&out, length: MemoryLayout<Int>.size)
-                    DispatchQueue.main.async {
-                        self.capsenseValue = out
-                    }
-                }
-            }
-        }
+        
 }

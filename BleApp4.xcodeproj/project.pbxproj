@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AB05DB5B2A5C551200F6A45F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB05DB5A2A5C551200F6A45F /* Storyboard.storyboard */; };
+		AB25898E2AA93089001CEE30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB25898D2AA93089001CEE30 /* AppDelegate.swift */; };
+		AB2589922AA93190001CEE30 /* PeripheralListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2589912AA93190001CEE30 /* PeripheralListView.swift */; };
 		AB4992212A571D35005C1CF3 /* BleApp4App.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4992202A571D35005C1CF3 /* BleApp4App.swift */; };
 		AB4992232A571D35005C1CF3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4992222A571D35005C1CF3 /* ContentView.swift */; };
 		AB4992252A571D35005C1CF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB4992242A571D35005C1CF3 /* Assets.xcassets */; };
@@ -16,7 +18,6 @@
 		AB49923C2A571D35005C1CF3 /* BleApp4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB49923B2A571D35005C1CF3 /* BleApp4UITests.swift */; };
 		AB49923E2A571D35005C1CF3 /* BleApp4UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB49923D2A571D35005C1CF3 /* BleApp4UITestsLaunchTests.swift */; };
 		AB49924B2A574F6D005C1CF3 /* BlueToothNeighborhood.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB49924A2A574F6D005C1CF3 /* BlueToothNeighborhood.swift */; };
-		AB49924D2A574F9B005C1CF3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB49924C2A574F9B005C1CF3 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		AB05DB5A2A5C551200F6A45F /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		AB25898D2AA93089001CEE30 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../Multi_test/Multi_test/AppDelegate.swift; sourceTree = "<group>"; };
+		AB2589912AA93190001CEE30 /* PeripheralListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralListView.swift; sourceTree = "<group>"; };
 		AB49921D2A571D35005C1CF3 /* BleApp4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BleApp4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB4992202A571D35005C1CF3 /* BleApp4App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BleApp4App.swift; sourceTree = "<group>"; };
 		AB4992222A571D35005C1CF3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -49,7 +52,6 @@
 		AB49923B2A571D35005C1CF3 /* BleApp4UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BleApp4UITests.swift; sourceTree = "<group>"; };
 		AB49923D2A571D35005C1CF3 /* BleApp4UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BleApp4UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		AB49924A2A574F6D005C1CF3 /* BlueToothNeighborhood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueToothNeighborhood.swift; sourceTree = "<group>"; };
-		AB49924C2A574F9B005C1CF3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB49924E2A575D00005C1CF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,8 +109,9 @@
 				AB4992242A571D35005C1CF3 /* Assets.xcassets */,
 				AB4992262A571D35005C1CF3 /* Preview Content */,
 				AB49924A2A574F6D005C1CF3 /* BlueToothNeighborhood.swift */,
-				AB49924C2A574F9B005C1CF3 /* AppDelegate.swift */,
+				AB25898D2AA93089001CEE30 /* AppDelegate.swift */,
 				AB05DB5A2A5C551200F6A45F /* Storyboard.storyboard */,
+				AB2589912AA93190001CEE30 /* PeripheralListView.swift */,
 			);
 			path = BleApp4;
 			sourceTree = "<group>";
@@ -269,9 +272,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB49924D2A574F9B005C1CF3 /* AppDelegate.swift in Sources */,
+				AB2589922AA93190001CEE30 /* PeripheralListView.swift in Sources */,
 				AB4992232A571D35005C1CF3 /* ContentView.swift in Sources */,
 				AB49924B2A574F6D005C1CF3 /* BlueToothNeighborhood.swift in Sources */,
+				AB25898E2AA93089001CEE30 /* AppDelegate.swift in Sources */,
 				AB4992212A571D35005C1CF3 /* BleApp4App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,6 +432,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BleApp4/Preview Content\"";
@@ -446,8 +451,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.rice.BleApp4;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.rice.BleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -459,6 +465,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BleApp4/Preview Content\"";
@@ -477,8 +484,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.rice.BleApp4;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.rice.BleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

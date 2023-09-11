@@ -25,8 +25,13 @@ struct ContentView: View {
     @State private var isServiceScanComplete = false
     @State private var isCharacteristicScanComplete = false
     @State private var isDiscoverCharacteristicsButtonEnabled = false
+    @State private var selectedPeripheral: CBPeripheral?
+    @State private var selectedTab: Int = 0
+
+
     
     var body: some View {
+        TabView(selection: $selectedTab) {
         VStack {
             //MARK: TITLE
             Text("BleApp")
@@ -50,17 +55,18 @@ struct ContentView: View {
             .disabled(bleLand.isDeviceFound || bleLand.isDisconnected)
             .padding()
             
-            
             //MARK: CONNECT TO DEVICE
-            Button(action: {
-                if bleLand.isDeviceFound {
-                    bleLand.connectToDevice()
-                }
-            }) {
-                Text("Connect to device")
-            }
-            .disabled(!bleLand.isDeviceFound)
-            .padding()
+                        Button(action: {
+                            if bleLand.isDeviceFound {
+                                bleLand.connectToDevice()
+                            }
+                        }) {
+                            Text("Connect to device")
+                        }
+                        .disabled(!bleLand.isDeviceFound)
+                        .padding()
+
+
             
             //MARK: DISCOVER SERVICES
             Button(action: {
@@ -212,6 +218,17 @@ struct ContentView: View {
             }
         }
     }
+        .tabItem {
+                        Label("Control", systemImage: "square.and.pencil")
+                    }
+                    //.tag(0)
+
+                    PeripheralListView(bleLand: bleLand)
+                        .tabItem {
+                            Label("Peripherals", systemImage: "list.bullet")
+                        }
+                        //.tag(1)
+                }
 }
         struct ContentView_Previews: PreviewProvider {
             static var previews: some View {
