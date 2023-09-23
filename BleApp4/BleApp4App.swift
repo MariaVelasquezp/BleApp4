@@ -3,22 +3,22 @@ import SwiftUI
 @main
 struct BleApp4App: App {
     @StateObject var bleLand = BlueToothNeighborhood()
-    @State private var selectedTab = 0 // Add this line
+    @State private var selectedTab = 0
 
     var body: some Scene {
         WindowGroup {
             TabView(selection: $selectedTab) {
-                ContentView()
+                ContentView(selectedTab: $selectedTab)
                     .tabItem {
                         Label("Control", systemImage: "square.and.pencil")
                     }
-                    .tag(0)
+                    .tag(1)
                 
                 PeripheralListView(bleLand: bleLand, selectedTab: $selectedTab)
                     .tabItem {
                         Label("Peripherals", systemImage: "list.bullet")
                     }
-                    .tag(1)
+                    .tag(0)
             }
         }
     }

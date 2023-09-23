@@ -11,7 +11,8 @@ struct PeripheralListView: View {
                 Button(action: {
                     // Set the selected peripheral and switch to the Control tab
                     bleLand.selectedPeripheral = peripheral
-                    selectedTab = 0 // Control tab index
+                    bleLand.connectToDevice()
+                    selectedTab = 0
                 }) {
                     Text(peripheral.name ?? "Unnamed Peripheral")
                 }
