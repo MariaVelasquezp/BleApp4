@@ -8,17 +8,17 @@ struct BleApp4App: App {
     var body: some Scene {
         WindowGroup {
             TabView(selection: $selectedTab) {
-                ContentView(selectedTab: $selectedTab)
-                    .tabItem {
-                        Label("Control", systemImage: "square.and.pencil")
-                    }
-                    .tag(1)
                 
                 PeripheralListView(bleLand: bleLand, selectedTab: $selectedTab)
                     .tabItem {
                         Label("Peripherals", systemImage: "list.bullet")
                     }
                     .tag(0)
+                ContentView(selectedTab: $selectedTab)
+                    .tabItem {
+                        Label("Control", systemImage: "square.and.pencil")
+                    }
+                    .tag(1)
             }
         }
     }
