@@ -9,16 +9,16 @@ struct BleApp4App: App {
         WindowGroup {
             TabView(selection: $selectedTab) {
                 ContentView(selectedTab: $selectedTab)
-                    /*.tabItem {
+                    .tabItem {
                         Label("Control", systemImage: "square.and.pencil")
                     }
-                    .tag(1)*/
+                    .tag(1)
                 
                 PeripheralListView(bleLand: bleLand, selectedTab: $selectedTab)
-                    /*.tabItem {
+                    .tabItem {
                         Label("Peripherals", systemImage: "list.bullet")
                     }
-                    .tag(0)*/
+                    .tag(0)
             }
         }
     }

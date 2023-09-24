@@ -8,13 +8,14 @@ struct PeripheralListView: View {
     var body: some View {
         NavigationView {
             List(bleLand.discoveredPeripherals, id: \.self) { peripheral in
-                Button(action: {
-                    // Set the selected peripheral and switch to the Control tab
+                NavigationLink(destination: ContentView(selectedTab: $selectedTab)) {
+                    Text(peripheral.name ?? "Unnamed Peripheral")
+                }
+                .onTapGesture {
+                    // Set the selected peripheral and initiate the connection
                     bleLand.selectedPeripheral = peripheral
                     bleLand.connectToDevice()
-                    selectedTab = 0
-                }) {
-                    Text(peripheral.name ?? "Unnamed Peripheral")
+                    selectedTab = 1 // Set the tab index for "Control" tab
                 }
             }
             .navigationBarTitle("Available Peripherals")

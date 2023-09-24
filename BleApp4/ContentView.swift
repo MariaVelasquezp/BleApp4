@@ -205,18 +205,10 @@ struct ContentView: View {
                     isCharacteristicScanComplete = false
                 }
             }
-        
-                    .tabItem {
-                        Label("Control", systemImage: "square.and.pencil")
-                    }
-                    .tag(1)
 
             // Peripheral List Tab
             PeripheralListView(bleLand: bleLand, selectedTab: $selectedTab)
-                .tabItem {
-                    Label("Peripherals", systemImage: "list.bullet")
-                }
-                .tag(0)
+                
         } //TabView
     } //var body: some view
 } //struct
